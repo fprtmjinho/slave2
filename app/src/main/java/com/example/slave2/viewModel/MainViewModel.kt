@@ -1,6 +1,8 @@
 package com.example.slave2.viewModel
 
 import androidx.lifecycle.ViewModel
+import com.example.slave2.model.User
 
-class MainViewModel:ViewModel() {
+class LoginViewModel:ViewModel() {
+    lateinit var user: User
 }
