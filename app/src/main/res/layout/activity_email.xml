@@ -54,14 +54,15 @@
                 android:text="\@soongsil.ac.kr"/>
         </LinearLayout>
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/main_bnv"
+        <Button
+            android:id="@+id/main_btn"
             android:layout_width="match_parent"
             android:layout_weight="1"
             android:layout_height="50dp"
             android:background="#D9D9D9"
             android:layout_gravity="bottom"
             android:text="다음"
+            android:onClick="@{()->viewModel.loginEmail()}"
             android:enabled="@{viewModel.email!=null &amp;&amp; !viewModel.email.isEmpty() }" />
     </LinearLayout>
 </layout>

@@ -6,21 +6,22 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import androidx.databinding.DataBindingUtil
+import androidx.activity.viewModels
 import com.example.slave2.R
-import com.example.slave2.databinding.ActivityMainBinding
+import com.example.slave2.databinding.ActivityEmailBinding
 import com.example.slave2.viewModel.LoginViewModel
 
 class EmailActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityMainBinding
-    private val viewModel = LoginViewModel()
+    private lateinit var binding: ActivityEmailBinding
+    private val viewModel : LoginViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
-        binding.viewModel = viewModel
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_email)
+        binding.lifecycleOwner = this
         setContentView(binding.root)
 
-        binding.lifecycleOwner = this
 
+        binding.viewModel = viewModel
         binding.emailEdit.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
                 // Nothing to do
@@ -34,11 +35,21 @@ class EmailActivity : AppCompatActivity() {
                 viewModel.onEmailChanged(s)
             }
         })
-        binding.mainBnv.setOnClickListener{
-            val intent = Intent(this, PasswordActivity::class.java)
-            intent.putExtra("sns", "NORMAL")
-            intent.putExtra("snsId", "")
-            startActivity(intent)
+        viewModel.event.observe(this) { handleEvent(it) }
+
+
+    }
+    private fun handleEvent(event: LoginViewModel.Event) {
+        when (event) {
+            is LoginViewModel.Event.emailLogin -> {
+                val intent = Intent(this, PasswordActivity::class.java)
+                startActivity(intent)
+            }
+            is LoginViewModel.Event.passwordLogin -> {
+//                val intent = Intent(this, FinishActivity::class.java)
+//                startActivity(intent)
+            }
+            else ->{}
         }
     }
 }
