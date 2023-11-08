@@ -55,7 +55,7 @@
         </LinearLayout>
 
         <Button
-            android:id="@+id/main_btn"
+            android:id="@+id/next_btn"
             android:layout_width="match_parent"
             android:layout_weight="1"
             android:layout_height="50dp"
