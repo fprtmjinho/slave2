@@ -43,12 +43,9 @@ class EmailActivity : AppCompatActivity() {
         when (event) {
             is LoginViewModel.Event.emailLogin -> {
                 val intent = Intent(this, PasswordActivity::class.java)
+                intent.putExtra("email",viewModel.email.value.toString())
                 finish()
                 startActivity(intent)
-            }
-            is LoginViewModel.Event.passwordLogin -> {
-//                val intent = Intent(this, FinishActivity::class.java)
-//                startActivity(intent)
             }
             else ->{}
         }

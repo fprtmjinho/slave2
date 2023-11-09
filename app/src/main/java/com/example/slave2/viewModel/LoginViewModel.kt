@@ -5,6 +5,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.slave2.model.User
 import java.util.regex.Pattern
 
 class LoginViewModel:ViewModel() {
@@ -13,7 +14,7 @@ class LoginViewModel:ViewModel() {
     val pwPattern = "^(?=.*[A-Za-z])(?=.*[0-9])[!-~₩]{8,100}$"
     val pattern = Pattern.compile(pwPattern)
 
-    private val _event: MutableLiveData<Event> = MutableLiveData()
+    val _event: MutableLiveData<Event> = MutableLiveData()
     val event: LiveData<Event>
         get() = _event
     init {
@@ -34,27 +35,24 @@ class LoginViewModel:ViewModel() {
         _event.value = Event.passwordLogin
     }
     fun back(){
-        Log.i("text","cencel")
         _event.value = Event.back
     }
     fun cencel(){
-        Log.i("text","cencel")
         _event.value = Event.cencel
     }
     fun visibility(){
-        Log.i("text",password.value.toString())
-        if(password.value!=null && pattern.matcher(password.value.toString()).find()){
+        if(password.value!=null && password.value.toString()!=""){
             _event.value = Event.visibility
         }else{
             _event.value = Event.invisibility
         }
     }
     sealed class Event {
-        object emailLogin : Event()
-        object passwordLogin : Event()
-        object back : Event()
-        object cencel : Event()
-        object visibility : Event()
-        object invisibility : Event()
+        data object emailLogin : Event()
+        data object passwordLogin : Event()
+        data object back : Event()
+        data object cencel : Event()
+        data object visibility : Event()
+        data object invisibility : Event()
     }
 }

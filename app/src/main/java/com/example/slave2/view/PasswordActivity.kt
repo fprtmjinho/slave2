@@ -41,11 +41,16 @@ class PasswordActivity : AppCompatActivity() {
     private fun handleEvent(event: LoginViewModel.Event) {
         when (event) {
             is LoginViewModel.Event.passwordLogin -> {
+                val email = intent.getStringExtra("email")
                 val intent = Intent(this, FinishActivity::class.java)
+                intent.putExtra("email",email)
+                intent.putExtra("password",viewModel.password.value.toString())
+                finish()
                 startActivity(intent)
             }
             is LoginViewModel.Event.back -> {
                 val intent = Intent(this, EmailActivity::class.java)
+                finish()
                 startActivity(intent)
             }
             is LoginViewModel.Event.cencel -> {
